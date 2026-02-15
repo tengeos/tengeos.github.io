@@ -2,19 +2,145 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>TengeOS | Проект запущен</title>
-    <style>
-        body { font-family: sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { text-align: center; border: 1px solid #1e293b; padding: 40px; border-radius: 20px; background: #1e293b; }
-        h1 { color: #10b981; margin-bottom: 10px; }
-        p { color: #94a3b8; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TengeOS | HyperOS Project</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="box">
-        <h1>TengeOS</h1>
-        <p>Мой первый сайт на GitHub Pages</p>
-        <small>Адрес: tengeos.github.io</small>
+
+    <div id="home-page" class="page active">
+        <header>
+            <h1 class="title">TengeOS</h1>
+            <p class="subtitle">New, best custom rom of HyperOS</p>
+            <a href="https://t.me/TengeOS_Roms" class="telegram-link" target="_blank">Telegram: @TengeOS_Roms</a>
+            <p class="credits">by @wectazz and @iduchamp</p>
+        </header>
+
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>TengeOS Port</h2>
+                        <p class="version">3.0.300.4.WONCNXM</p>
+                        <p class="device">#duchamp</p>
+                    </div>
+                    <div class="changelog">
+                        <p>Changelog and bugs:</p>
+                        <ul>
+                            <li>Pre-root SukuSU Ultra with SusFS</li>
+                            <li>Modded system apps by @kakashi1v1</li>
+                            <li>Choice: root or rootless</li>
+                            <li>Incorrect memory mapping in settings</li>
+                            <li>Based on Redmi K80 Ultra (dali)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="https://t.me/DuchampROM_screenshots/4" target="_blank" class="btn btn-outline">Screenshots</a>
+                    <button class="btn btn-solid" onclick="showDownloads('port')">Download ROM</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>TengeOS Mod</h2>
+                        <p class="version">1.0.5.0.WNLCNXM</p>
+                        <p class="device">#duchamp</p>
+                    </div>
+                    <div class="changelog">
+                        <p>Changelog and bugs:</p>
+                        <ul>
+                            <li>Pre-root SukuSU Ultra with SusFS</li>
+                            <li>Modded system apps by @kakashi1v1</li>
+                            <li>Choice: root or rootless</li>
+                            <li>Based on official HyperOS build</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="https://t.me/DuchampROM_screenshots/21?single" target="_blank" class="btn btn-outline">Screenshots</a>
+                    <button class="btn btn-solid" onclick="showDownloads('mod')">Download ROM</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div id="download-page" class="page hidden">
+        <div class="download-container">
+            <h2 id="dl-title">Загрузка прошивки</h2>
+            <p class="subtitle">Pick mirror for download:</p>
+            
+            <div id="dl-buttons" class="download-list">
+                </div>
+
+            <button class="btn-back" onclick="showHome()">← Back</button>
+        </div>
+    </div>
+
+    <script>
+        // Данные для скачивания
+        const romData = {
+            'port': {
+                title: 'TengeOS Port',
+                // Ссылка на Google Drive
+                mirrorName: 'Google Drive',
+                link: 'https://drive.google.com/file/d/1pRKrcdmdKFNE9hOiZ7PafHSue2vBiiOB/view?usp=sharing'
+            },
+            'mod': {
+                title: 'TengeOS Mod',
+                // Ссылка на Gofile
+                mirrorName: 'Gofile',
+                link: 'https://gofile.io/d/8eaEC5'
+            }
+        };
+
+        function showDownloads(type) {
+    const home = document.getElementById('home-page');
+    const downloads = document.getElementById('download-page');
+    const titleEl = document.getElementById('dl-title');
+    const listEl = document.getElementById('dl-buttons');
+
+    const data = romData[type];
+    titleEl.textContent = data.title;
+    listEl.innerHTML = `
+        <div class="download-item">
+            <span>Mirror: ${data.mirrorName}</span>
+            <a href="${data.link}" target="_blank" class="btn-sm">Download</a>
+        </div>
+    `;
+
+    // 1. Начинаем затухание текущей страницы
+    home.classList.remove('active');
+
+    // 2. Ждем 500мс (пока закончится анимация затухания)
+    setTimeout(() => {
+        home.classList.add('hidden'); // Убираем главную совсем
+        downloads.classList.remove('hidden'); // Включаем структуру зеркал
+        
+        // 3. Даем браузеру 50мс, чтобы он "понял", что блок появился
+        setTimeout(() => {
+            downloads.classList.add('active'); // Включаем плавное появление
+        }, 50);
+    }, 500);
+}
+
+function showHome() {
+    const home = document.getElementById('home-page');
+    const downloads = document.getElementById('download-page');
+
+    // 1. Затухание зеркал
+    downloads.classList.remove('active');
+
+    setTimeout(() => {
+        downloads.classList.add('hidden');
+        home.classList.remove('hidden');
+
+        setTimeout(() => {
+            home.classList.add('active');
+        }, 50);
+    }, 500);
+}
+    </script>
 </body>
 </html>
